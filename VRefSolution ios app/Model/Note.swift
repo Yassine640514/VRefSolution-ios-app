@@ -14,21 +14,12 @@ struct Note: Equatable{
     let noteOption: NoteOption?
     let rating: Int?
     
+    // A computed property
+    var isEmpty: Bool {
+        return note == nil && noteOption == nil && rating == nil || rating == 0 || note == ""
+    }
     
     func hasNilField() -> Bool {
-        
-//        if(([userId, note, noteOption, rating] as [Any?]).contains(where: { $0 == nil})){
-//            if(note == "" || rating == 0){
-//                return true
-//            }
-//            else{
-//                return false
-//            }
-//        }
-//        else{
-//            return false
-//        }
-            //return ([note, rating] as [Any?]).contains(where: { $0 == nil})
         
         if(note == nil)
         {
@@ -36,30 +27,12 @@ struct Note: Equatable{
         }
         else if(rating == nil)
         {
-           return true
+            return true
         }
         else{
-          return false
+            return false
         }
-        }
-    
-    // A computed property
-    var isEmpty: Bool {
-        
-//        if(note != nil || note != ""){
-//            if(rating != nil || rating != 0){
-//                return true
-//            }
-//            return false
-//        }
-//        else{
-//            return false
-//        }
-        return note == nil && noteOption == nil && rating == nil || rating == 0 || note == ""
-        
-        //fix
     }
-    
 }
 
 enum PilotType : String {

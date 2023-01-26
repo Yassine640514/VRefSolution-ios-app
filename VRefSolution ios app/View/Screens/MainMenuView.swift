@@ -9,12 +9,13 @@ import SwiftUI
 
 struct MainMenuView: View {
     
+    @EnvironmentObject var loginVM: LoginViewModel
+    @StateObject var mainMenuVM = MainMenuViewModel()
+    @State var selectedSession: Session?
+    
     @State var showSessionPopup : Bool = false
     @State var showReviewPopUp : Bool = false
     @State var emptySession : Bool = false
-    @State var selectedSession: Session?
-    @StateObject var mainMenuVM = MainMenuViewModel()
-    @EnvironmentObject var loginVM: LoginViewModel
     
     var body: some View {
         if(mainMenuVM.readyToStart){
@@ -22,7 +23,6 @@ struct MainMenuView: View {
         }
         else if(mainMenuVM.readyToReview){
             ReviewView(session: mainMenuVM.currentSession!, video: mainMenuVM.video!)
-            // hier komt review screen
         }
         else if (loginVM.isAuthenticated){
             ZStack(){
@@ -68,7 +68,7 @@ struct MainMenuView: View {
                         Image(systemName: "gearshape")
                             .foregroundColor(Color.white).frame(width: 280, height: 0, alignment: Alignment.trailing).padding(.bottom)
                         
-                        Text("Welcome \(loginVM.username )!")
+                        Text("Welcome \(loginVM.firstName!)!")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -110,13 +110,13 @@ struct MainMenuView: View {
                                             .progressViewStyle(CircularProgressViewStyle(tint: Color("buttonColorBlue")))
                                             .scaleEffect(x: 3, y: 3, anchor: .center)
                                             .onAppear{
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                                                //after 10 sec loading, show error message
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
                                                     emptySession = true
                                                 }
                                             }
                                     }.frame(width: 500.0, height: 500.0).padding(.top)
                                         .onAppear(perform: handleOnAppear)
-                                    //fix preview
                                 }
                             }.frame(height: 550)
                         }

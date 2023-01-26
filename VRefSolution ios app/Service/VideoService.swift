@@ -82,20 +82,20 @@ class VideoService{
         request.httpBody = try? JSONEncoder().encode(body)
         
         URLSession.shared.dataTaskPublisher(for: request)
-                .receive(on: DispatchQueue.main)
-                .sink(
-                    receiveCompletion: { result in
-                        switch result {
-                        case .finished:
-                            break
-                        case .failure(let error):
-                            completion(.failure(.custom(errorMessage: error.localizedDescription)))
-                        }
-                    },
-                    receiveValue: { response in
-                        completion(.success(""))
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { result in
+                    switch result {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        completion(.failure(.custom(errorMessage: error.localizedDescription)))
                     }
-                )
-                .store(in: &cancellables)
-        }
+                },
+                receiveValue: { response in
+                    completion(.success(""))
+                }
+            )
+            .store(in: &cancellables)
+    }
 }

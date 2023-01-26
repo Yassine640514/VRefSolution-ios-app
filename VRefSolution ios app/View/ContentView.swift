@@ -8,26 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var networkManager: NetworkManager
     @EnvironmentObject var loginVM: LoginViewModel
-    //let userDefaults = UserDefaults.standard
+    @EnvironmentObject var networkManager: NetworkManager
     
     var body: some View {
         
         //checking internet connectivity
-        //if networkManager.isConnected {
-            if loginVM.isAuthenticated && loginVM.error == nil{
+        if networkManager.isConnected {
+            
+            if (loginVM.isAuthenticated){
                 MainMenuView()
             }
             else{
                 LoginView()
             }
-//        }
-//        else{
-//            NoConnectionView(networkManager: self.networkManager)
-//        }
+            
+        }
+        else{
+            NoConnectionView()
+        }
     }
 }
+        
         
 
 struct ContentView_Previews: PreviewProvider {

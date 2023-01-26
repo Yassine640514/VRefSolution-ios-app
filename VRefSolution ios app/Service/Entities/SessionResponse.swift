@@ -19,7 +19,3 @@ struct SessionCreateRequestBody: Codable {
     let UserIds: [String]
     let CompanyId: String
 }
-
-struct SessionUpdate: Codable{
-    
-}

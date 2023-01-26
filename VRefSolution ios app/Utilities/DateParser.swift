@@ -28,12 +28,6 @@ class DateParser{
         
         return "Session - \(dayName) \(numDay)th - \(time)"
         
-        //        // Create Date Formatter
-        //        let dateFormatter = DateFormatter()
-        //        // Set Date Format
-        //        dateFormatter.dateFormat = " E dd - hh:mm"
-        
-        
     }
     
     func parseDate(date: Date) -> String{
@@ -48,13 +42,23 @@ class DateParser{
     
     
     func toDate(date: String) -> Date?{
-        /// The ISO8601 formatted date, time and millisec "yyyy-MM-dd'T'HH:mm:ss.SSSZ" i.e. 1997-07-16T19:20:30.45+01:00
-        /// isoDateTimeMilliSec
         let format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         let date = dateFormatter.date(from: date)
         return date
+    }
+    
+    func toString(date: Date) ->String{
+        
+        // Create Date Formatter
+        let dateFormatter = DateFormatter()
+
+        // Set Date Format
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+
+        // Convert Date to String
+        return dateFormatter.string(from: date)
     }
     
     func getCurrentTimerInFormat(progressTime: Int) -> String{

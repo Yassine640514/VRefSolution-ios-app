@@ -27,11 +27,9 @@
 		C2A6D64B2969E7CD002B6EF3 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6D64A2969E7CD002B6EF3 /* PlayerView.swift */; };
 		C2A6D64D296D4BCF002B6EF3 /* RecordResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6D64C296D4BCF002B6EF3 /* RecordResponse.swift */; };
 		C2A6D64F296D4BF4002B6EF3 /* RecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6D64E296D4BF4002B6EF3 /* RecordService.swift */; };
-		C2A6D651296EA97F002B6EF3 /* testPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6D650296EA97F002B6EF3 /* testPlayer.swift */; };
 		C2A6D653296EBAD4002B6EF3 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6D652296EBAD4002B6EF3 /* Record.swift */; };
 		C2C42FE3293E5B3D00DF9539 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C42FE2293E5B3D00DF9539 /* SplashScreenView.swift */; };
 		C2C42FE5293E7B1B00DF9539 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C42FE4293E7B1B00DF9539 /* NetworkManager.swift */; };
-		C2C42FE7293E7FF100DF9539 /* LoginComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C42FE6293E7FF100DF9539 /* LoginComponent.swift */; };
 		C2C42FE9293E830500DF9539 /* NoConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C42FE8293E830500DF9539 /* NoConnectionView.swift */; };
 		C2C42FEB293E9E0D00DF9539 /* AuthenticationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C42FEA293E9E0D00DF9539 /* AuthenticationError.swift */; };
 		C2C42FF92943C1C900DF9539 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = C2C42FF82943C1C900DF9539 /* JWTDecode */; };
@@ -49,7 +47,6 @@
 		C2DC8FB22966004100F5DB5C /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC8FB12966004100F5DB5C /* EventService.swift */; };
 		C2DC8FB42966CA7600F5DB5C /* EventResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC8FB32966CA7600F5DB5C /* EventResponse.swift */; };
 		C2DC8FB62968017700F5DB5C /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC8FB52968017700F5DB5C /* ReviewView.swift */; };
-		C2DC8FB82968061800F5DB5C /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC8FB72968061800F5DB5C /* ReviewViewModel.swift */; };
 		C2DC8FBA296895B500F5DB5C /* StreamingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC8FB9296895B500F5DB5C /* StreamingService.swift */; };
 		C2DC8FBC2968962D00F5DB5C /* LiveEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC8FBB2968962D00F5DB5C /* LiveEvent.swift */; };
 		C2DC8FBE2968975100F5DB5C /* StreamingAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC8FBD2968975100F5DB5C /* StreamingAsset.swift */; };
@@ -82,11 +79,9 @@
 		C2A6D64A2969E7CD002B6EF3 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		C2A6D64C296D4BCF002B6EF3 /* RecordResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordResponse.swift; sourceTree = "<group>"; };
 		C2A6D64E296D4BF4002B6EF3 /* RecordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordService.swift; sourceTree = "<group>"; };
-		C2A6D650296EA97F002B6EF3 /* testPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testPlayer.swift; sourceTree = "<group>"; };
 		C2A6D652296EBAD4002B6EF3 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		C2C42FE2293E5B3D00DF9539 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		C2C42FE4293E7B1B00DF9539 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		C2C42FE6293E7FF100DF9539 /* LoginComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginComponent.swift; sourceTree = "<group>"; };
 		C2C42FE8293E830500DF9539 /* NoConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoConnectionView.swift; sourceTree = "<group>"; };
 		C2C42FEA293E9E0D00DF9539 /* AuthenticationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationError.swift; sourceTree = "<group>"; };
 		C2C42FFA29474EE800DF9539 /* MainMenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuService.swift; sourceTree = "<group>"; };
@@ -104,7 +99,6 @@
 		C2DC8FB12966004100F5DB5C /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		C2DC8FB32966CA7600F5DB5C /* EventResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventResponse.swift; sourceTree = "<group>"; };
 		C2DC8FB52968017700F5DB5C /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
-		C2DC8FB72968061800F5DB5C /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		C2DC8FB9296895B500F5DB5C /* StreamingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingService.swift; sourceTree = "<group>"; };
 		C2DC8FBB2968962D00F5DB5C /* LiveEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveEvent.swift; sourceTree = "<group>"; };
 		C2DC8FBD2968975100F5DB5C /* StreamingAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingAsset.swift; sourceTree = "<group>"; };
@@ -138,7 +132,6 @@
 				C2215AE42931220A0011A574 /* LoginViewModel.swift */,
 				C2215AF5293761030011A574 /* MainMenuViewModel.swift */,
 				C2215AFF293898050011A574 /* InstructorViewModel.swift */,
-				C2DC8FB72968061800F5DB5C /* ReviewViewModel.swift */,
 			);
 			path = Viewmodel;
 			sourceTree = "<group>";
@@ -215,7 +208,6 @@
 				C21DE51E292CC359005394E2 /* SessionCell.swift */,
 				C21DE520292CD4DE005394E2 /* NewSession.swift */,
 				C2215AFD293874EE0011A574 /* EventCell.swift */,
-				C2C42FE6293E7FF100DF9539 /* LoginComponent.swift */,
 				C2C43005294B415500DF9539 /* RatingCell.swift */,
 				C2C43007294F0F1700DF9539 /* TimerCell.swift */,
 				C2F22D992961902D00538FEE /* ReviewSession.swift */,
@@ -233,7 +225,6 @@
 				C2C42FE2293E5B3D00DF9539 /* SplashScreenView.swift */,
 				C2C42FE8293E830500DF9539 /* NoConnectionView.swift */,
 				C2DC8FB52968017700F5DB5C /* ReviewView.swift */,
-				C2A6D650296EA97F002B6EF3 /* testPlayer.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -374,7 +365,6 @@
 				C2A6D64F296D4BF4002B6EF3 /* RecordService.swift in Sources */,
 				C2215AF42933D2580011A574 /* LoginResponse.swift in Sources */,
 				C21DE51F292CC359005394E2 /* SessionCell.swift in Sources */,
-				C2A6D651296EA97F002B6EF3 /* testPlayer.swift in Sources */,
 				C2DC8FB22966004100F5DB5C /* EventService.swift in Sources */,
 				C2215AE2292F5EDD0011A574 /* InstructorView.swift in Sources */,
 				C2C42FE9293E830500DF9539 /* NoConnectionView.swift in Sources */,
@@ -382,7 +372,6 @@
 				C2215AE52931220A0011A574 /* LoginViewModel.swift in Sources */,
 				C2F22D9E296430EE00538FEE /* SessionResponse.swift in Sources */,
 				C2C42FFD29475BE900DF9539 /* Session.swift in Sources */,
-				C2DC8FB82968061800F5DB5C /* ReviewViewModel.swift in Sources */,
 				C21DE51B292B530E005394E2 /* MainMenuView.swift in Sources */,
 				C2C42FEB293E9E0D00DF9539 /* AuthenticationError.swift in Sources */,
 				C2215AF12933CE540011A574 /* LoginService.swift in Sources */,
@@ -400,7 +389,6 @@
 				C2DC8FBA296895B500F5DB5C /* StreamingService.swift in Sources */,
 				C2A6D653296EBAD4002B6EF3 /* Record.swift in Sources */,
 				C2C430042949C28000DF9539 /* User.swift in Sources */,
-				C2C42FE7293E7FF100DF9539 /* LoginComponent.swift in Sources */,
 				C2C42FFB29474EE800DF9539 /* MainMenuService.swift in Sources */,
 				C2A6D64D296D4BCF002B6EF3 /* RecordResponse.swift in Sources */,
 				C2215AFE293874EE0011A574 /* EventCell.swift in Sources */,

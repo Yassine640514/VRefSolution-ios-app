@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ReviewView: View {
-    //@StateObject private var reviewVM = ReviewViewModel()
     @StateObject private var instructorVM = InstructorViewModel()
     private let loginVM = LoginViewModel()
     
@@ -19,6 +18,7 @@ struct ReviewView: View {
     @State private var emptyEvents : Bool = false
     @State private var canChangeNote = false
     @State private var changedNote = false
+    @State private var successMessage = false
     
     private var isStudent: Bool {loginVM.userRole! == UserType.ROLE_PILOT.rawValue}
     @State private var selectedPilot: PilotType = PilotType.Both
@@ -34,9 +34,7 @@ struct ReviewView: View {
             ZStack(){
                 //Topbar
                 NavigationView(){
-                    
                     VStack(){
-                        
                         //video
                         Group(){
                             
@@ -45,16 +43,11 @@ struct ReviewView: View {
                                     .foregroundColor(Color("colorBlue")).font((.system(size: 8))).bold()
                                     .progressViewStyle(CircularProgressViewStyle(tint: Color("buttonColorBlue")))
                                     .scaleEffect(x: 3, y: 3, anchor: .center).padding(.bottom, 90)
-                                
-                                
                             }
                             else{
                                 PlayerView(videoLink: self.video.videoURL!)
                             }
                         }.frame(width: 888, height: 492).border(.black).position(x:746, y: 248)
-                        
-                        //background color
-                        //Color("darkmodeColor2").edgesIgnoringSafeArea(.all)
                     }
                     .background(Color("darkmodeColor2").frame(height: 2000))
                     .toolbarBackground(Color("topbarColor"), for: .navigationBar)
@@ -108,7 +101,6 @@ struct ReviewView: View {
                         .padding(.top,-15)
                         .padding(.leading, 3)
                         
-                        
                         Text("Highlights")
                             .font(.title)
                             .fontWeight(.bold)
@@ -124,12 +116,10 @@ struct ReviewView: View {
                                             
                                             Button(action: {
                                                 self.selectedEvent = event
-//                                                value.scrollTo(selectedEvent!.id, anchor: .top)
                                                 updateNote(toPush: false)
                                             }) {
                                                 
                                                 EventCell(event: event, selected: event.equals(compareTo: selectedEvent) ? true : false)
-                                                //.padding(.bottom, -9)
                                                     .id(event.id)
                                             }.onAppear{
                                                 if (self.selectedEvent == nil)
@@ -137,14 +127,10 @@ struct ReviewView: View {
                                                     selectedEvent = instructorVM.eventsOfSession.first
                                                     
                                                     updateNote(toPush: false)
-                                                    
-//                                                    value.scrollTo(selectedEvent!.id, anchor: .top)
                                                 }
-                                                
                                             }
-                                        }//.frame(maxWidth: .infinity)
+                                        }
                                     }
-                                    
                                 }
                                 else if (emptyEvents){
                                     Text("No events found in this session") .multilineTextAlignment(.center).foregroundColor(.white).font((.system(size: 18)))
@@ -156,9 +142,6 @@ struct ReviewView: View {
                                             .foregroundColor(Color("buttonColorBlue")).font((.system(size: 8)))
                                             .progressViewStyle(CircularProgressViewStyle(tint: Color("buttonColorBlue")))
                                             .scaleEffect(x: 3, y: 3, anchor: .center)
-//                                            .onChange(of: self.instructorVM.eventsAvailable, perform: { newValue in
-//                                                <#code#>
-//                                            })
                                             .onAppear{
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
                                                     if(self.instructorVM.eventsAvailable == true){
@@ -167,14 +150,11 @@ struct ReviewView: View {
                                                 }
                                             }
                                     }.frame(width: 200.0, height: 400.0).padding(.top)
-                                    //.onAppear(perform: handleOnAppear)
                                 }
                             }.frame(maxWidth: .infinity)
                                 .frame(height: 640)
                                 .background(.gray)
                         }
-                        
-                        
                     }.frame(width: 299, height: 761).background(Color("darkmodeColor1")).offset(x: -447.0, y: 36)
                 }
                 
@@ -205,7 +185,6 @@ struct ReviewView: View {
                                 Text(selectedEvent?.eventType.eventName ?? "").font(.subheadline)
                                 .foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/).frame(width: 110, alignment: .leading)                            }.frame(width: 120)
                         }
-                        
                         HStack(){
                             Text("Altitude: ").font(.headline)
                                 .fontWeight(.semibold)
@@ -237,7 +216,7 @@ struct ReviewView: View {
                             }.frame(width: 100, height: 45)
                                 .foregroundColor(Color.white)
                                 .background(selectedPilot == PilotType.First_Officer ? Color("buttonColorBlue") : Color("darkmodeColor1"))
-                                .border(.black)
+                                .border(.gray, width: 0.5)
                             
                             Button(action:{self.selectedPilot = PilotType.Both}){
                                 Text("Both")
@@ -246,7 +225,7 @@ struct ReviewView: View {
                             }.frame(width: 100, height: 45, alignment: .center)
                                 .foregroundColor(Color.white)
                                 .background(selectedPilot == PilotType.Both ? Color("buttonColorBlue") : Color("darkmodeColor1"))
-                                .border(.black)
+                                .border(.gray, width: 0.5)
                                 .padding(.leading, -7)
                             
                             Button(action:{self.selectedPilot = PilotType.Captain}){
@@ -256,7 +235,7 @@ struct ReviewView: View {
                             }.frame(width: 100, height: 45,alignment: .center)
                                 .foregroundColor(Color.white)
                                 .background(selectedPilot == PilotType.Captain ? Color("buttonColorBlue") : Color("darkmodeColor1"))
-                                .border(.black)
+                                .border(.gray, width: 0.5)
                                 .padding(.leading, -7)
                             
                             ZStack{
@@ -269,22 +248,39 @@ struct ReviewView: View {
                                     .position(x: -159, y: 181)
                                     .disabled(!canChangeNote)
                                 
-                                Button(action:{
-                                    if(self.canChangeNote == true){
-                                        self.canChangeNote = false
-                                    }
-                                    else{
-                                        self.canChangeNote = true
-                                    }
+                                Group{
+                                    Button(action:{
+                                        if(self.canChangeNote == true){
+                                            self.canChangeNote = false
+                                        }
+                                        else{
+                                            self.canChangeNote = true
+                                        }
+                                    }){
+                                        Image(systemName: "pencil").bold().font(.largeTitle)
+                                    }.foregroundColor( self.canChangeNote ? Color.blue : Color.black)
+                                        .opacity(isStudent ? 0 : 1)
+                                       .padding(.trailing, 50)
                                     
-                                }){
-                                    Image(systemName: self.canChangeNote ? "pencil.slash" : "pencil").bold().font(.largeTitle)
-                                }.foregroundColor(Color.blue)
-                                .position(x: -40, y: 250)
-                                .opacity(isStudent ? 0 : 1)
+                                    Button(action:{
+                                        if(self.canChangeNote == true){
+                                            self.canChangeNote = false
+                                        }
+                                        else{
+                                            self.canChangeNote = true
+                                        }
+                                        
+                                        self.writtenNote = ""
+                                        self.noteRating = 0
+                                        
+                                    }){
+                                        Text("X").bold().font(.largeTitle)
+                                    }.foregroundColor(self.canChangeNote ? .blue : .black)
+                                        .padding(.leading, 30)
+                                } .position(x: -60, y: 250)
                             }
                             
-                        }.frame(width: 350).position(x:180, y:30).onChange(of: self.selectedPilot) { value in
+                        }.frame(width: 550).position(x:300, y:30).onChange(of: self.selectedPilot) { value in
                             self.updateNote(toPush: false)
                         }
                         
@@ -302,12 +298,24 @@ struct ReviewView: View {
                             //progress and message
                             
                             if(self.changedNote){
-                                ProgressView("Loading").frame(width: 100, height: 100,alignment: .center).position(x:460, y:-30).onAppear{
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                        //Text("Succesfully changed!").frame(width: 100, height: 100,alignment: .center).position(x:460, y:-30)
+                                
+                                ProgressView("Loading").frame(width: 100, height: 100,alignment: .center).foregroundColor(.white) .progressViewStyle(CircularProgressViewStyle(tint: Color(.white))).position(x:460, y:-30).onAppear{
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                         self.changedNote = false
+                                        self.successMessage = true
                                     }
                                 }
+                            }
+                            else if(successMessage){
+                                HStack{
+                                    Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
+                                    Text("Succesfully changed!").foregroundColor(.green).bold().onAppear{
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                            self.successMessage = false
+                                        }
+                                    }
+                                }.frame(width: 200, height: 100,alignment: .center).position(x:460, y:-30)
+                                
                             }
                             else{
                                 Text("").frame(width: 100, height: 100,alignment: .center).position(x:460, y:-30)
@@ -336,10 +344,8 @@ struct ReviewView: View {
                                 .position(x:475, y:10)
                                 .disabled(!canChangeNote)
                                 .disabled(selectedEvent == nil)
-                                .opacity(isStudent ? 0 : 1)
+                                .opacity(isStudent || selectedEvent == nil || !canChangeNote ? 0 : 1)
                         }
-                        
-                        
                     }.frame(width: 640, height: 239).position(x: 570, y: 115)
                 }.frame(width: 888, height: 239).background(Color("darkmodeColor2")).position(x:746, y: 670)
             }
@@ -393,9 +399,6 @@ private extension ReviewView {
                     self.writtenNote = selectedEvent?.feedbackAll ?? ""
                 }
             }
-
-//            self.selectedNoteOption = .Written;
-//            self.selectedNote = ""
         }
     }
 }

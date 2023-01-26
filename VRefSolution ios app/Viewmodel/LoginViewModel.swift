@@ -14,7 +14,7 @@ class LoginViewModel: ObservableObject {
     
     var username: String = ""
     var password: String = ""
-    @Published var isAuthenticated: Bool = false
+    @Published var doneAuthentication: Bool = false
     @Published var error: AuthenticationError?
     @Published var hasError: Bool = false
     private let loginService: LoginService = LoginService()
@@ -23,7 +23,19 @@ class LoginViewModel: ObservableObject {
     private var userIdKeyChainKey = "userId"
     private var companyIdKeyChainKey = "companyId"
     private var userRoleKeyChainKey = "userRole"
-    //private let defaults = UserDefaults.standard
+    private var expiresAtKeyChainKey = "expirationTime"
+    private var firstNameKeyChainKey = "firstName"
+    
+    var isAuthenticated: Bool {
+        if (self.accessToken != nil){
+            self.decodeToken()
+            
+            if (DateParser().toDate(date: self.expiresAt!)! >= Date.now){
+                return true
+            }
+        }
+        return false
+    }
     
     var accessToken: String? {
         get {
@@ -48,6 +60,19 @@ class LoginViewModel: ObservableObject {
                 return
             }
             try? keychain.set("\(userId)", key: userIdKeyChainKey)
+        }
+    }
+    
+    var firstName: String? {
+        get{
+            try? keychain.getString(firstNameKeyChainKey)
+        }
+        set(newValue){
+            guard let firstName = newValue else{
+                try? keychain.remove(firstNameKeyChainKey)
+                return
+            }
+            try? keychain.set("\(firstName)", key: firstNameKeyChainKey)
         }
     }
     
@@ -77,16 +102,28 @@ class LoginViewModel: ObservableObject {
         }
     }
     
+    var expiresAt: String? {
+        get{
+            try? keychain.getString(expiresAtKeyChainKey)
+        }
+        set(newValue){
+            guard let expiresAt = newValue else{
+                try? keychain.remove(expiresAtKeyChainKey)
+                return
+            }
+            try? keychain.set("\(expiresAt)", key: expiresAtKeyChainKey)
+        }
+    }
+    
     func login() {
         
         loginService.login(username: username, password: password) { result in
             switch result {
             case .success(let token):
-                print("TOKENNN: { \(token) }")
+                print("TOKEN: { \(token) }")
                 self.accessToken = token
-                DispatchQueue.main.async {
-                    self.isAuthenticated = true
-                }
+                self.doneAuthentication = true
+                self.firstName = self.username
                 self.decodeToken()
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -104,8 +141,9 @@ class LoginViewModel: ObservableObject {
         self.userId = nil
         self.companyId = nil
         self.userRole = nil
+        self.firstName = nil
         DispatchQueue.main.async {
-            self.isAuthenticated = false
+            self.doneAuthentication = false
             self.hasError = false
             self.error = nil
             self.username = ""
@@ -120,24 +158,11 @@ class LoginViewModel: ObservableObject {
             {
                 let jwt = try decode(jwt: self.accessToken!)
                 
-                //Role of loggedin person
                 self.userRole = jwt["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"].string
-                print("Role is \(String(describing: self.userRole))")
-                
                 self.companyId = jwt["CompanyId"].string
-                print("CompanyId is \(String(describing: self.companyId))")
-                
-                
                 self.userId = jwt["UserId"].string
-                print("UserId is \(self.userId!)")
-                
-                
-//                defaults.set(jwt.expiresAt, forKey: "expirationTime")
-//                print("expirationTime at is \(String(describing: defaults.object(forKey: "expirationTime")))")
-//
-//                defaults.set(jwt.issuedAt, forKey: "issuedAt")
-//                print("issuedAt at is \(String(describing: defaults.object(forKey: "issuedAt")))")
-                
+                self.expiresAt = DateParser().toString(date: jwt.expiresAt!)
+   
             }
 
         } catch {

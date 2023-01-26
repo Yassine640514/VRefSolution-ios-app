@@ -38,10 +38,7 @@ class MainMenuViewModel: ObservableObject {
             switch result {
             case .success(var result):
                 result = result.sorted(by: { $0.startTime > $1.startTime })
-                //result.sorted { $0.startTime > $1.startTime }
                 self.sessionsOfLoggedInUser = result
-                print("RESULTSS: { \(result) }")
-                
             case .failure(let error):
                 
                 print(error)
@@ -49,18 +46,12 @@ class MainMenuViewModel: ObservableObject {
         }
     }
     
-//    let now = Date.now
-//    let tomorrow = Date.now.addingTimeInterval(86400)
-//    let range = now...tomorrow
-//    
     func getUsers() {
         
         mainMenuService.getUsersByCompanyId() { result in
             switch result {
             case .success(let result):
                 self.allUsersOfCompany = result
-                print("users: { \(result) }")
-                
             case .failure(let error):
                 print(error)
             }
@@ -97,7 +88,6 @@ class MainMenuViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.video = result
                     print("Video from api: { \(result) }")
-                    //self.readyToContinue = true
                 }
                 
             case .failure(let error):
@@ -135,25 +125,12 @@ class MainMenuViewModel: ObservableObject {
                 
                 if let i = self.sessionsOfLoggedInUser.firstIndex(where: { $0.id == session.id}) {
                     self.sessionsOfLoggedInUser[i].users = result
-                    print("UsersBySessionId: { \(result) }")
                 }
             case .failure(let error):
                 print(error)
             }
         }
     }
-
-    
-//    func parseToString(date: Date) -> String{
-//        // Create Date Formatter
-//        let dateFormatter = DateFormatter()
-//
-//        // Set Date/Time Style
-//        dateFormatter.dateStyle = .long
-//        dateFormatter.timeStyle = .short
-//
-//        return dateFormatter.string(from: date)
-//    }
     
     func getPilots() -> [User]{
         // empty array
@@ -172,14 +149,6 @@ class MainMenuViewModel: ObservableObject {
 
         let timeToLive: TimeInterval = 60 * 60 * 24 // 60 seconds * 60 minutes * 24 hours
         
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy-MM-dd+HH:mm"
-//        let nowString = formatter.string(from: Date())
-        
-//        var filtered = self.sessionsOfLoggedInUser.filter { Calendar.current.isDate($0.startTime, equalTo: Date(), toGranularity: Calendar.Component.day)}
-        
-        //var filtered = self.sessionsOfLoggedInUser.filter { $0.startTime.timeIntervalSinceNow <= timeToLive }
-        
         var filtered = self.sessionsOfLoggedInUser.filter { $0.startTime.addingTimeInterval(timeToLive) >= Date.now}
         
         if role == .ROLE_PILOT{
@@ -187,11 +156,6 @@ class MainMenuViewModel: ObservableObject {
         }
         
         return filtered
-        
-        //return self.sessionsOfLoggedInUser.filter { $0.startTime.timeIntervalSince(Date()) >= timeToLive }
-        
-        
-        //return self.sessionsOfLoggedInUser.filter { $0.startTime.timeIntervalSinceNow >= timeToLive}
         
     }
 }

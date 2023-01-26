@@ -66,7 +66,5 @@ class StreamingService{
                 completion(.failure(.custom(errorMessage: error.localizedDescription)))
             }
         })
-    }
-    
-    
+    } 
 }

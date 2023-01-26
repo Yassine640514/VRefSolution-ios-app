@@ -12,11 +12,9 @@ struct Event: Identifiable{
     var id: Int {
             self.timestamp
         }
-    //let id: String
     let eventId: String?
     let logbookId: String?
     let timestamp: Int
-    //let eventId: String?
     let eventType: eventType
     var captain: String?
     var firstOfficer: String?
@@ -28,35 +26,6 @@ struct Event: Identifiable{
     var ratingFirstOfficer: Int?
     var altitude: Int?
 
-//    var altitude: Int{
-//        return Int.random(in: 8000...40000)
-//    }
-//    var altitude: Int {
-//        get { return Int.random(in: 8000...30000) }
-//        set {
-//            _altitude = newValue
-//        }
-//    }
-    
-    /// Computed properties to get the progressTime in hh:mm:ss format
-//    var hours: Int {
-//        timeInSeconds / 3600
-//    }
-//    
-//    var minutes: Int {
-//        (timeInSeconds % 3600) / 60
-//    }
-//    
-//    var seconds: Int {
-//        timeInSeconds % 60
-//    }
-//    
-//    var timestamp: String {
-//        return "\(self.hours < 10 ? "0\(self.hours)" : String(self.hours)):\(self.minutes < 10 ? "0\(self.minutes)" : String(self.minutes)):\(self.seconds < 10 ? "0\(self.seconds)" : String(self.seconds))"
-//    }
-
-
-    
     private func isObjectNotNil(object:AnyObject!) -> Bool
     {
         if let _:AnyObject = object
@@ -73,46 +42,6 @@ struct Event: Identifiable{
         return feedbackAll.isEmptyOrNil && feedbackCaptain.isEmptyOrNil && feedbackFirstOfficer.isEmptyOrNil
     }
     
-//        let empty = Note(userId: nil, note: nil, noteOption: nil, rating: nil)
-//        if (notesFirstOfficer == empty && notesBoth == empty && notesCaptain == empty){
-//            return false
-//        }
-//        else{
-//            return true
-//        }
-//        if(notesFirstOfficer != nil && notesBoth != nil && notesCaptain != nil){
-//            if notesFirstOfficer?.hasNilField() ?? false && notesBoth?.hasNilField() ?? false && notesCaptain?.hasNilField() ?? false{
-//                return false
-//            }
-//            else{
-//                return true
-//            }
-//        }
-//        else{
-//            return true
-//        }
-        
-       
-//        if(notesFirstOfficer?.hasNilField() ?? false){
-//            return true
-//        }
-//        else if(notesBoth?.hasNilField() ?? false){
-//            return true
-//        }
-//        else if(notesCaptain?.hasNilField() ?? false){
-//            return true
-//        }
-//        else{
-//            return false
-//        }
-//        if (notesFirstOfficer != nil && notesBoth != nil && notesCaptain != nil ){
-//
-//        }
-        //return notesFirstOfficer?.isEmpty ?? false && notesBoth?.isEmpty ?? false && notesCaptain?.isEmpty ?? false
-        //return(notesFirstOfficer?.isEmpty == false && notesBoth?.isEmpty == true && notesCaptain?.isEmpty == true)//
-   // }
-    
-    
     func equals (compareTo:Event?) -> Bool {
         if (compareTo == nil){
             return false
@@ -126,21 +55,6 @@ struct Event: Identifiable{
                 self.eventId == compareTo!.eventId
         }
     }
-//
-//    func getNote (type: PilotType) -> Note? {
-//        if (type == .First_Officer){
-//            return notesFirstOfficer
-//        }
-//        else if (type == .Both){
-//            return notesBoth
-//        }
-//        else if (type == .Captain){
-//            return notesCaptain
-//        }
-//        else{
-//            return nil
-//        }
-//    }
 }
 
 enum eventType: String {

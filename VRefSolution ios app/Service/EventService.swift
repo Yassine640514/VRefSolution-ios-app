@@ -58,14 +58,14 @@ class EventService{
             switch result{
             case .success(let response):
                 let result = Event(eventId: response.id, logbookId: response.logbookId, timestamp: response.timeStamp, eventType: eventType(rawValue: response.eventType)!, captain: response.captain, firstOfficer: response.firstOfficer, feedbackAll: response.feedbackAll, feedbackCaptain: response.feedbackCaptain, feedbackFirstOfficer: response.feedbackFirstOfficer, ratingAll: response.ratingAll, ratingCaptain: response.ratingCaptain, ratingFirstOfficer: response.ratingFirstOfficer)
-        
+                
                 completion(.success(result))
             case .failure(let error):
                 completion(.failure(.custom(errorMessage: error.localizedDescription)))
             }
         })
     }
-
+    
     func updateEventByEventId(event: Event, completion: @escaping (Result<Event, ApiError>) -> Void) {
         
         guard let url = URL(string: "\(BaseURL.url)Events/update-single/\(event.eventId!)") else {
@@ -85,12 +85,11 @@ class EventService{
             switch result{
             case .success(let response):
                 let result = Event(eventId: response.id, logbookId: response.logbookId, timestamp: response.timeStamp, eventType: eventType(rawValue: response.eventType)!, captain: response.captain, firstOfficer: response.firstOfficer, feedbackAll: response.feedbackAll, feedbackCaptain: response.feedbackCaptain, feedbackFirstOfficer: response.feedbackFirstOfficer, ratingAll: response.ratingAll, ratingCaptain: response.ratingCaptain, ratingFirstOfficer: response.ratingFirstOfficer)
-        
+                
                 completion(.success(result))
             case .failure(let error):
                 completion(.failure(.custom(errorMessage: error.localizedDescription)))
             }
         })
     }
-    
 }

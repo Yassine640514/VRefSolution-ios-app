@@ -10,20 +10,16 @@ import Combine
 
 struct ReviewSession: View {
     
+    @ObservedObject var mainMenuVM: MainMenuViewModel
     @State private var isTryingToStart: Bool = false
-    
     @State private var isReview: Bool = false
-    //@State private var loadedUsers: Bool = false
     @State private var isInstructor: Bool = false
     
-    @ObservedObject var mainMenuVM: MainMenuViewModel
     var session: Session
-    
     var loadedUsers: Bool {self.session.users?.isEmpty != true}
     
     
     init(mainMenuVM: MainMenuViewModel, session: Session) {
-        //fix runs muliple times.
         self.session = session
         self.mainMenuVM = mainMenuVM
 
@@ -46,13 +42,6 @@ struct ReviewSession: View {
                         .foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
                         .padding(.trailing)
                     Image("notFinished")
-                        //.resizable()
-                        //.aspectRatio(contentMode: .fill)
-                        //.frame(width: 60, height: 60)
-                        //.clipped()
-                        //.fixedSize()
-                        //.font(Font.system(.footnote)
-                            //.weight(.semibold)).foregroundColor(.orange)
                         .opacity(session.status != .Finished ? 1 : 0)
                 }
             }.frame(width: 680, height: 84).background(Color("darkmodeColor1")).offset(x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: -147.0)
@@ -80,7 +69,6 @@ struct ReviewSession: View {
                                     .foregroundColor(Color("buttonColorBlue")).font((.system(size: 8)))
                                     .progressViewStyle(CircularProgressViewStyle(tint: Color("buttonColorBlue")))
                                     .scaleEffect(x: 2, y: 2, anchor: .top).padding(.leading)
-                                    //.onAppear{ self.session = updateSession()}
                             }
                         }.padding(.leading).frame(width: 180, height: 130, alignment: .topLeading)
                         VStack(alignment: .leading){
@@ -88,21 +76,20 @@ struct ReviewSession: View {
                             if session.users?.isEmpty == false{
                                 ForEach(session.users!) { user in
                                     Text("\(user.firstName) \(user.lastName)").font(.system(size: 14)).padding(2)
-                                }//.onAppear{self.loadedUsers = true}
+                                }
                             }
                             else{
                                 ProgressView("Loading...")
                                     .foregroundColor(Color("buttonColorBlue")).font((.system(size: 8)))
                                     .progressViewStyle(CircularProgressViewStyle(tint: Color("buttonColorBlue")))
-                                    .scaleEffect(x: 2, y: 2, anchor: .top).padding(.leading)//.onAppear{ self.session = updateSession()}
+                                    .scaleEffect(x: 2, y: 2, anchor: .top).padding(.leading)
                             }
                         }.padding(.trailing).frame(width: 210, height: 130, alignment: .topLeading)
 
                     }
                     .frame(width:468, height: 58, alignment: Alignment.leading)
                     .offset(x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: -80.0)
-                }//.onAppear(perform: getUsers)
-                
+                }                
                 //Session
                 Group{
                     HStack(alignment: .top){
@@ -125,26 +112,11 @@ struct ReviewSession: View {
                                 
                 if (self.session.status == .Started){
                     //session not done
-                    
-                    //self.isTryingToStart = true;
-//                    self.mainMenuVM.getVideo(sessionId: session.id)
-//                    self.mainMenuVM.currentSession = self.session
                     self.mainMenuVM.readyToContinue = true
                     self.isInstructor = true
-                        //self.mainMenuVM.createSession(instructor: instructor);
-
                 }
                 else{
                     self.isReview = true
-                    //get video
-                    //self.mainMenuVM.getVideo(sessionId: self.session.id);
-                    
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-//                        //switch view
-//                        self.mainMenuVM.readyToReview = true
-//
-//                    }
-                    
                 }
                 
             }){
@@ -165,28 +137,7 @@ struct ReviewSession: View {
             .onChange(of: self.isReview == true && mainMenuVM.video != nil && mainMenuVM.currentSession != nil) { _ in
                     self.mainMenuVM.readyToReview = true
             }
-//            .onChange(of: self.session){ _ in
-//                if (self.session == true){
-//                    self.loadedUsers = false
-//                }
-//            }
-           
     }
-}
-
-private extension ReviewSession{
-    
-//    func getUsers() {
-//        if(checkUsers){
-//            mainMenuVM.getUsersBySessionId(session: self.session)
-//            self.session = mainMenuVM.sessionsOfLoggedInUser.first(where: {$0.id == session.id})!
-//        }
-//    }
-//
-//    func updateSession() -> Session{
-//            return mainMenuVM.sessionsOfLoggedInUser.first(where: {$0.id == session.id})!
-//
-//    }
 }
 
 struct ReviewSession_Previews: PreviewProvider {

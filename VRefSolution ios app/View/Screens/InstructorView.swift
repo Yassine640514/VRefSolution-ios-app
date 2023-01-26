@@ -43,84 +43,89 @@ struct InstructorView: View {
                 NavigationView(){
                     ScrollView(){
                         VStack(){
-                    
+                            
                             //livestream
                             Group(){
                                 
-                                if(obsSuccessful && self.instructorVM.liveEvent?.hls != nil){
-                                    
-                                    PlayerView(videoLink: self.instructorVM.liveEvent!.hls!).onAppear{self.instructorVM.triggerTimer()}
-                                    
+                                if(self.video.videoURL == nil){
+                                    ProgressView(self.instructorVM.progressLiveStream)
+                                        .foregroundColor(Color("colorBlue")).font((.system(size: 8))).bold()
+                                        .progressViewStyle(CircularProgressViewStyle(tint: Color("buttonColorBlue")))
+                                        .scaleEffect(x: 3, y: 3, anchor: .center).padding(.bottom, 90)
                                 }
                                 else{
-                                    VStack{
-                                        
-                                        if (self.instructorVM.liveEvent?.hls != nil && self.instructorVM.streamingAsset?.status == .Running){
-                                            Button(action:{
-                                                print("clicked start")
-                                                self.obsSuccessful = true
-                                                self.instructorVM.triggerTimer()
-                                            }){
-                                                Image(systemName: "livephoto.play").font(.title)
-                                                    .foregroundColor(.white)
-                                                Text("Start").bold().font(.title)
-                                            }.frame(width: 237, height: 55)
-                                                .fontWeight(.bold)
-                                                .foregroundColor(Color.white)
-                                                .background(Color("buttonColorPurple"))
-                                                .cornerRadius(20.0)
-                                                .padding(.bottom, 70)
-                                        }
-                                        else{
-                                            
-                                            ProgressView(self.instructorVM.progressLiveStream)
-                                                .foregroundColor(Color("colorBlue")).font((.system(size: 8))).bold()
-                                                .progressViewStyle(CircularProgressViewStyle(tint: Color("buttonColorBlue")))
-                                                .scaleEffect(x: 3, y: 3, anchor: .center).padding(.bottom, 90)
-                                        }
-                                        
-                                        Text("Start OBS Studio and use the following ingest url:").fontWeight(.bold)
-                                            .foregroundColor(Color.white)
-                                        
-                                        
-                                        HStack{
-                                            
-                                            Text(self.instructorVM.streamingAsset?.ingestURL == nil ? "link is being retrieved..." : String(self.instructorVM.streamingAsset!.ingestURL)).frame(width: 350, height: 50).background(.white).padding(.leading,70)
-                                            
-                                            Button(action:{
-                                                UIPasteboard.general.string = self.instructorVM.streamingAsset!.ingestURL
-                                                
-                                                self.linkIsCopied = true
-                                                
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5){
-                                                    self.linkIsCopied = false
-                                                }
-                                                
-                                            }){
-                                                Image(systemName: "doc.on.doc")
-                                                    .foregroundColor(.white)
-                                                    .font(.title2)
-                                            }.frame(width: 60, height: 50)
-                                                .fontWeight(.bold)
-                                                .foregroundColor(Color.white)
-                                                .background(self.instructorVM.streamingAsset?.ingestURL.isEmpty ?? false ? .gray : .green)
-                                                .padding(.leading,-8)
-                                                .disabled(self.instructorVM.streamingAsset?.ingestURL.isEmpty ?? true)
-                                            
-                                            Text("Copied!").foregroundColor(.green).bold().font(.title3).opacity(self.linkIsCopied ? 1 : 0)
-                                        }
-                                    }
+                                    PlayerView(videoLink: self.video.videoURL!)
                                 }
-                                }.frame(width: 888, height: 492).border(.black).position(x:746, y: 248)//.zIndex(3)
-               
-                            //background color
-                            //Color("darkmodeColor2").edgesIgnoringSafeArea(.all)
-                            
-                            
-                        }//.zIndex(-2)
+                                
+                                ////THIS CODE BELOW IS FOR THE LIVESTREAM
+                                
+//                                if(obsSuccessful && self.instructorVM.liveEvent?.hls != nil){
+//
+//                                    PlayerView(videoLink: self.instructorVM.liveEvent!.hls!).onAppear{self.instructorVM.triggerTimer()}
+//
+//                                }
+//                                else{
+//                                    VStack{
+//
+//                                        if (self.instructorVM.liveEvent?.hls != nil && self.instructorVM.streamingAsset?.status == .Running){
+//                                            Button(action:{
+//                                                print("clicked start")
+//                                                self.obsSuccessful = true
+//                                                self.instructorVM.triggerTimer()
+//                                            }){
+//                                                Image(systemName: "livephoto.play").font(.title)
+//                                                    .foregroundColor(.white)
+//                                                Text("Start").bold().font(.title)
+//                                            }.frame(width: 237, height: 55)
+//                                                .fontWeight(.bold)
+//                                                .foregroundColor(Color.white)
+//                                                .background(Color("buttonColorPurple"))
+//                                                .cornerRadius(20.0)
+//                                                .padding(.bottom, 70)
+//                                        }
+//                                        else{
+//
+//                                            ProgressView(self.instructorVM.progressLiveStream)
+//                                                .foregroundColor(Color("colorBlue")).font((.system(size: 8))).bold()
+//                                                .progressViewStyle(CircularProgressViewStyle(tint: Color("buttonColorBlue")))
+//                                                .scaleEffect(x: 3, y: 3, anchor: .center).padding(.bottom, 90)
+//                                        }
+//
+//                                        Text("Start OBS Studio and use the following ingest url:").fontWeight(.bold)
+//                                            .foregroundColor(Color.white)
+//
+//
+//                                        HStack{
+//
+//                                            Text(self.instructorVM.streamingAsset?.ingestURL == nil ? "link is being retrieved..." : String(self.instructorVM.streamingAsset!.ingestURL)).frame(width: 350, height: 50).background(.white).padding(.leading,70)
+//
+//                                            Button(action:{
+//                                                UIPasteboard.general.string = self.instructorVM.streamingAsset!.ingestURL
+//
+//                                                self.linkIsCopied = true
+//
+//                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5){
+//                                                    self.linkIsCopied = false
+//                                                }
+//
+//                                            }){
+//                                                Image(systemName: "doc.on.doc")
+//                                                    .foregroundColor(.white)
+//                                                    .font(.title2)
+//                                            }.frame(width: 60, height: 50)
+//                                                .fontWeight(.bold)
+//                                                .foregroundColor(Color.white)
+//                                                .background(self.instructorVM.streamingAsset?.ingestURL.isEmpty ?? false ? .gray : .green)
+//                                                .padding(.leading,-8)
+//                                                .disabled(self.instructorVM.streamingAsset?.ingestURL.isEmpty ?? true)
+//
+//                                            Text("Copied!").foregroundColor(.green).bold().font(.title3).opacity(self.linkIsCopied ? 1 : 0)
+//                                        }
+//                                    }
+//                                }
+                            }.frame(width: 888, height: 492).border(.black).position(x:746, y: 248)
+                        }
                         .background(Color("darkmodeColor2").frame(height: 2000))
-                        //.background(Color("darkmodeColor2").frame(width: 90000, height: 2000))
-                        
                         .toolbarBackground(Color("topbarColor"), for: .navigationBar)
                         .toolbarBackground(.visible, for: .navigationBar)
                         .toolbar{
@@ -165,8 +170,7 @@ struct InstructorView: View {
                                         .font(.system(size: 18))
                                         .frame(width: 117, height: 36).background(Color("darkmodeColor1")).cornerRadius(6)
                                         .padding(.bottom,10)
-                                    //.onAppear{self.instructorVM.triggerTimer()}
-                                }
+                                }.onAppear{self.instructorVM.triggerTimer()}
                             }
                             ToolbarItem(placement: .navigationBarTrailing){
                                 Button(action:{
@@ -207,23 +211,17 @@ struct InstructorView: View {
                                                 value.scrollTo(selectedEvent!.id, anchor: .bottom)
                                                 updateNote(toPush: false)
                                             }) {
-                                                
                                                 EventCell(event: event, selected: event.equals(compareTo: selectedEvent) ? true : false)
-                                                //.padding(.bottom, -9)
                                                     .id(event.id)
                                             }.onAppear{
                                                 if (self.selectedEvent == nil)
                                                 {
                                                     selectedEvent = instructorVM.eventsOfSession.last
-                                                    
                                                     updateNote(toPush: false)
-                                                    
                                                     value.scrollTo(selectedEvent!.id, anchor: .bottom)
                                                 }
-                                                
                                             }
                                         }
-                                        
                                     }
                                 }
                                 else if (emptyEvents){
@@ -245,18 +243,11 @@ struct InstructorView: View {
                                                 }
                                             }
                                     }.frame(width: 200.0, height: 500.0).padding(.top)
-                                    //.onAppear(perform: handleOnAppear)
                                 }
                                 
                             }.frame(maxWidth: .infinity)
                                 .frame(height: 540)
                                 .background(.gray)
-                            //                            .onChange(of: self.selectedEvent!) { value in
-                            //                                let note = selectedEvent?.getNote(type: selectedPilot)
-                            //
-                            //                                self.noteRating = note?.rating ?? 0;
-                            //                                self.selectedNoteOption = note?.noteOption ?? .Written;
-                            //                                self.writtenNote = note?.note ?? ""}
                         }
                         Button(action:{
                             selectedEvent = instructorVM.markedEvent();
@@ -272,9 +263,6 @@ struct InstructorView: View {
                             .cornerRadius(/*@START_MENU_TOKEN@*/20.0/*@END_MENU_TOKEN@*/)
                             .padding(.top)
                             .disabled(selectedEvent?.eventType == .MARKED_EVENT)
-                        
-                        
-                        
                         
                         Text("Current altitude: \(self.selectedEvent?.altitude ?? 0) ft").padding(.leading,45).frame(width: 275, height: 25, alignment: .leading).background(.gray).padding(.top).padding(.bottom, 18)
                             .fontWeight(.medium)
@@ -341,7 +329,7 @@ struct InstructorView: View {
                             }.frame(width: 150, height: 36)
                                 .foregroundColor(Color.white)
                                 .background(selectedPilot == PilotType.First_Officer ? Color("buttonColorBlue") : Color("darkmodeColor1"))
-                                .border(.black)
+                                .border(.gray, width: 0.5)
                             
                             Button(action:{self.selectedPilot = PilotType.Both}){
                                 Text("Both")
@@ -350,7 +338,7 @@ struct InstructorView: View {
                             }.frame(width: 150, height: 36, alignment: .center)
                                 .foregroundColor(Color.white)
                                 .background(selectedPilot == PilotType.Both ? Color("buttonColorBlue") : Color("darkmodeColor1"))
-                                .border(.black)
+                                .border(.gray, width: 0.5)
                                 .padding(.leading, -7)
                             
                             Button(action:{self.selectedPilot = PilotType.Captain}){
@@ -360,7 +348,7 @@ struct InstructorView: View {
                             }.frame(width: 150, height: 36,alignment: .center)
                                 .foregroundColor(Color.white)
                                 .background(selectedPilot == PilotType.Captain ? Color("buttonColorBlue") : Color("darkmodeColor1"))
-                                .border(.black)
+                                .border(.gray, width: 0.5)
                                 .padding(.leading, -7)
                         }.frame(width: 350).position(x:229, y:25).onChange(of: self.selectedPilot) { value in
                             self.updateNote(toPush: false)
@@ -436,7 +424,6 @@ struct InstructorView: View {
                                 Button(action:{
                                     updateNote(toPush: true)
                                     if(selectedEvent?.eventType == .MARKED_EVENT){
-                                        //self.selectedEvent.
                                         instructorVM.createEvent(event: selectedEvent!)
                                     }
                                     else{
@@ -471,7 +458,9 @@ struct InstructorView: View {
                         print("Confirm clicked")
                         self.alertShown = true
                         self.instructorVM.updateSessionStatus(sessionId: session.id)
-                        self.instructorVM.endLiveSession()
+                        
+                        ////THIS CODE BELOW IS FOR THE LIVESTREAM
+                        //self.instructorVM.endLiveSession()
                     },
                     secondaryButton: .cancel(){print("Cancel clicked")}
                 )
@@ -501,7 +490,8 @@ private extension InstructorView {
     func setup(){
         self.instructorVM.setup(isContinuing: self.isContinuing, currentVideo: self.video)
         
-        self.instructorVM.updateLiveStream(liveEvent: LiveEvent(name: .Camera1, stopLive: .Run, hls: nil))
+        ////THIS CODE BELOW IS FOR THE LIVESTREAM
+        //self.instructorVM.updateLiveStream(liveEvent: LiveEvent(name: .Camera1, stopLive: .Run, hls: nil))
     }
     
     func updateNote(toPush: Bool){
@@ -546,28 +536,6 @@ private extension InstructorView {
             self.selectedNote = ""
         }
     }
-    
-
-//    func handelTimer(){
-//        if (!instuctorVM.isRunning){
-//            instuctorVM.pauzeTimer()
-//        }
-//        else{
-//            instuctorVM.startTimer()
-//        }
-//    }
-    
-//    func handleTimer() {
-//
-//        if isRunning{
-//            timer?.invalidate()
-//        } else {
-//            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-//                progressTime += 1
-//            })
-//        }
-//        isRunning.toggle()
-//    }
 }
 
 struct InstructorView_Previews: PreviewProvider {

@@ -13,12 +13,13 @@ struct LoginView: View {
     @State private var showingAlert = false
     @EnvironmentObject var loginVM: LoginViewModel
     @EnvironmentObject var networkManager: NetworkManager
-    //@StateObject private var loginVM = LoginViewModel()
     
     var body: some View {
             
-        if(loginVM.isAuthenticated){
-            MainMenuView()
+        if(loginVM.doneAuthentication){
+            if(loginVM.isAuthenticated){
+                MainMenuView()
+            }
         }
         else{
             ZStack(){
@@ -115,7 +116,6 @@ struct LoginView: View {
                                         loginVM.error = AuthenticationError.usernameOrPasswordEmpty
                                         loginVM.hasError = true
                                         self.showingAlert = true
-                                        print("FOUTTTTT")
                                     }
                                     
                                     if loginVM.error != nil{
@@ -140,8 +140,6 @@ struct LoginView: View {
                 Button("Retry", role: nil, action: {
                     loginVM.error = nil;
                     loginVM.hasError = false;
-                    //                loginVM.username = "";
-                    //                loginVM.password = "";
                     self.isTryingToLogin = false
                     
                 })

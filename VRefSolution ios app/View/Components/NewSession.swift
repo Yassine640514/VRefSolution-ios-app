@@ -41,11 +41,6 @@ struct NewSession: View {
                 ProgressView().frame(width: 100, height: 210)
                     .progressViewStyle(CircularProgressViewStyle(tint: Color("buttonColorBlue")))
                     .scaleEffect(x: 4, y: 4, anchor: .center)
-//                    .onAppear{
-//                        if (mainMenuVM.isCreated){
-//                            self.mainMenuVM.readyToStart = true
-//                        }
- //                  }
             }
             else{
                 //session name
@@ -54,7 +49,6 @@ struct NewSession: View {
                         Text("Session name")
                             .padding(.bottom, 4.0)
                             .padding(.leading, 15.0)
-                        //                            .onAppear{mainMenuVM.setSessionDateAndName()}
                         Text(mainMenuVM.sessionName!)
                             .padding(.bottom, 4.0)
                             .padding(.leading, 45.0)
@@ -64,8 +58,6 @@ struct NewSession: View {
                     .cornerRadius(5)
                     .offset(x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: -80.0)
                 }.onAppear{mainMenuVM.getUsers()}
-                //fix preview
-                
                 
                 //First officer
                 Group{
@@ -158,12 +150,6 @@ struct NewSession: View {
             }
             Button(action:{self.isTryingToStart = true;
                 self.mainMenuVM.createSession(instructor: instructor);
-                
-                
-                //                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                //                    //post video
-                //
-                //                }
             }){
                 Text("Start")
                     .font(.title2)

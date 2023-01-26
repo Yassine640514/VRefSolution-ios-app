@@ -45,8 +45,6 @@ struct EventCell: View {
                             Image(systemName: "star.fill").foregroundColor(.yellow).font(.footnote)
                         }.frame(width: 31, alignment: .center)
                             .background(Color("buttonColorPurple")).padding(.top, -7)
-                            //.padding(.trailing)
-                            //.opacity(event.notesBoth?.rating != 0 ? 1 : 0)
                     }
                 }
                 
@@ -57,7 +55,6 @@ struct EventCell: View {
             Divider().frame(height: 2).overlay(Color("lightGreyText")).position(x:150, y:-13)
             
         }.frame(width: 300, height: 48)
-            //.background(Color("darkmodeColor2"))
             .background(selected == true ? Color("buttonColorBlue") : Color("darkmodeColor2"))
     }
 }
